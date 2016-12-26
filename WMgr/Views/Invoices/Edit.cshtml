@@ -1,0 +1,223 @@
+﻿@model WMgr.Models.Invoice
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+<div class="form-horizontal">
+    <h4>Invoice</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
+                <dt>@Html.DisplayNameFor(model => model.Number)</dt>
+                <dd>@Html.DisplayFor(model => model.Number)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Date)</dt>
+                <dd>@Html.DisplayFor(model => model.Date)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Validated)</dt>
+                <dd>@Html.DisplayFor(model => model.Validated)</dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <h2 id="invoiceTotal">Total: $553.87</h2>
+        </div>
+    </div>
+    <hr />
+
+    <div class="panel panel-default">
+        <table class="table table-striped table-condensed table-hover table-fixed" id="invoiceProducts">
+            <tr>
+                <th>Product</th>
+                <th width="15%">Quantity</th>
+                <th width="15%">Price</th>
+                <th width="20%">Actions</th>
+            </tr>
+            @foreach (var detail in Model.Details)
+            {
+                <tr id="productId@(detail.Product.ProductId)">
+                    <td>@detail.Product.ProductName</td>
+                    <td>@detail.Quantity</td>
+                    <td>@detail.SellPrice</td>
+                    <td><button class="btn btn-danger btnRemove" id="btnRemoveId@(detail.Product.ProductId)">Delete</button></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<div id="searchGroup" @if (Model.Validated) { <text> hidden</text> }>
+    <div class="form-group">
+        <input type="text" class="form-control col-md-10 col-xs-10" id="productSearch" placeholder="type a product name" />
+        <div class="col-md-2 col-xs-2">
+            <button class="btn btn-info" type="button" id="btnProductSearch">Search</button>
+        </div>
+    </div>
+
+    <div class="panel panel-default" id="searchResults">
+        <table class="table table-striped table-condensed table-hover table-fixed" id="productsTable">
+            <tr>
+                <th>Product name</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr />
+<div>
+    @Html.ActionLink("Back to List", "Index", "Invoices", new { @class = "btn btn-primary" })
+    @if (!Model.Validated)
+    {
+        <button class="btn btn-success" id="btnValidate">Validate</button>
+    }
+    else
+    {
+        <button class="btn btn-danger" id="btnInvalidate">Invalidate</button>
+    }
+
+</div>
+
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+    function addSearchResult(product) {
+        var html = "<tr>";
+        html += "<td>" + product["ProductName"] + "</td>";
+        html += "<td>" + product["Price"] + "</td>";
+        html += "<td><button id=\"btnAddProductId" + product["ProductId"] + "\" class=\"btn btn-default\">Add</button></td>";
+        html += "</tr>";
+
+        $("#productsTable").append(html);
+        $("#btnAddProductId" + product["ProductId"]).on("click", function () {
+            var productId = this.id;
+            productId = productId.replace("btnAddProductId", "");
+            console.log("Product id is " + productId);
+            sendAdditionRequest(productId);
+        });
+    }
+
+    function searchProductsWithName(name) {
+        $.ajax({
+            type: "POST",
+            url: "/Products/Search",
+            data: { search: name },
+            success: function (data) {
+                $("#productsTable").find("tr:gt(0)").remove();
+                for (var i = 0; i < data.length; i++) {
+                    addSearchResult(data[i]);
+                }
+            }
+        });
+    }
+
+    function addInvoiceProduct(details) {
+        var productRow = $("#productId" + details["Product"]["ProductId"]);
+        if (productRow.length == 0) {
+            var html = "<tr id=\"productId" + details["Product"]["ProductId"] + "\">";
+            html += "<td>" + details["Product"]["ProductName"] + "</td>";
+            html += "<td>1</td>";
+            html += "<td>" + details["Product"]["Price"] + "</td>";
+            html += "<td><button id=\"btnRemoveId" + details["Product"]["ProductId"] + "\" class=\"btn btn-danger btnRemove\">Delete</button></td>";
+            html += "</tr>";
+
+            $("#invoiceProducts").append(html);
+            $(".btnRemove").on("click", function () {
+                var productId = this.id;
+                productId = productId.replace("btnRemoveId", "");
+                console.log("btnclick" + productId);
+                sendRemovalRequest(productId);
+            });
+        } else {
+            var oldQty = parseInt(productRow.find("td:eq(1)").text());
+            productRow.find("td:eq(1)").text(oldQty + 1);
+        }
+    }
+
+    function sendAdditionRequest(product) {
+        var invoiceId = @Model.InvoiceId;
+        $.ajax({
+            type: "POST",
+            url: "/Invoices/AddProduct",
+            data: { invoiceId: invoiceId, productId: product },
+            success: function (data) {
+                addInvoiceProduct(data);
+            }
+        });
+    }
+
+    function sendRemovalRequest(productId) {
+        var invoiceId = @Model.InvoiceId;
+        $.ajax({
+            type: "POST",
+            url: "/Invoices/RemoveProduct",
+            data: { invoiceId: invoiceId, productId: productId },
+            success: function () {
+                removeInvoiceProduct(productId);
+            }
+        });
+    }
+
+    function removeInvoiceProduct(productId) {
+        $("#productId" + productId).remove();
+        //$(document).remove("#productId" + productId);
+        console.log("removeInvoiceProduct " + productId);
+    }
+
+    function btnRemoveClick() {
+        var productId = this.id;
+        productId = productId.replace("btnRemoveId", "");
+        console.log("btnclick" + productId);
+        sendRemovalRequest(productId);
+    }
+
+    function validateInvoice() {
+        var invoiceId = @Model.InvoiceId;
+        $.ajax({
+            type: "POST",
+            url: "/Invoices/Validate",
+            data: {id: invoiceId},
+            success: function () {
+                $("#searchGroup").hide();
+                alert("Invoice validated. Additional alterations are not permitted.");
+            }
+        });
+    }
+
+    function invalidateInvoice() {
+        var invoiceId = @Model.InvoiceId;
+        $.ajax({
+            type: "POST",
+            url: "/Invoices/Invalidate",
+            data: {id: invoiceId},
+            success: function () {
+                $("#searchGroup").show();
+                alert("Invoice invalidated. Alterations are now permitted.");
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("#btnInvalidate").on("click", function (){
+            invalidateInvoice();
+        });
+        $("#btnValidate").on("click", function (){
+            validateInvoice();
+        });
+        $("#btnProductSearch").click(function () {
+            searchProductsWithName($("#productSearch").val());
+        });
+        $(".btnRemove").click(function () {
+            var productId = this.id;
+            productId = productId.replace("btnRemoveId", "");
+            console.log("btnclick" + productId);
+            sendRemovalRequest(productId);
+        });
+    });
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

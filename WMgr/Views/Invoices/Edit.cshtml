@@ -18,7 +18,7 @@
                 <dt>@Html.DisplayNameFor(model => model.Date)</dt>
                 <dd>@Html.DisplayFor(model => model.Date)</dd>
 
-                <dt>@Html.DisplayNameFor(model => model.Validated)</dt>
+                <dt>@Html.DisplayNameFor(model => model.Validated)</dt> 
                 <dd>@Html.DisplayFor(model => model.Validated)</dd>
             </dl>
         </div>
@@ -38,7 +38,7 @@
             </tr>
             @foreach (var detail in Model.Details)
             {
-                <tr id="productId@(detail.Product.ProductId)">
+                <tr class="invoiceDetail" id="productId@(detail.Product.ProductId)">
                     <td>@detail.Product.ProductName</td>
                     <td>@detail.Quantity</td>
                     <td>@detail.SellPrice</td>
@@ -117,7 +117,7 @@
     function addInvoiceProduct(details) {
         var productRow = $("#productId" + details["Product"]["ProductId"]);
         if (productRow.length == 0) {
-            var html = "<tr id=\"productId" + details["Product"]["ProductId"] + "\">";
+            var html = "<tr class=\"invoiceDetail\" id=\"productId" + details["Product"]["ProductId"] + "\">";
             html += "<td>" + details["Product"]["ProductName"] + "</td>";
             html += "<td>1</td>";
             html += "<td>" + details["Product"]["Price"] + "</td>";
@@ -135,6 +135,7 @@
             var oldQty = parseInt(productRow.find("td:eq(1)").text());
             productRow.find("td:eq(1)").text(oldQty + 1);
         }
+        updateInvoiceTotal();
     }
 
     function sendAdditionRequest(product) {
@@ -163,8 +164,9 @@
 
     function removeInvoiceProduct(productId) {
         $("#productId" + productId).remove();
+        updateInvoiceTotal();
         //$(document).remove("#productId" + productId);
-        console.log("removeInvoiceProduct " + productId);
+        //console.log("removeInvoiceProduct " + productId);
     }
 
     function btnRemoveClick() {
@@ -196,11 +198,23 @@
             success: function () {
                 $("#searchGroup").show();
                 alert("Invoice invalidated. Alterations are now permitted.");
-            }
+            }  
         });
     }
 
+    function updateInvoiceTotal() {
+        var total = 0;
+        $(".invoiceDetail").each(function (index, element){
+            //console.log("row" + index + ": " + this.text())
+            total += parseFloat($(this).find("td:eq(2)").text()).toFixed(2) * parseInt($(this).find("td:eq(1)").text());
+            console.log(total);
+        });
+        $("#invoiceTotal").text("Total: " + total.toFixed(2));
+    }
+
     $(document).ready(function () {
+        updateInvoiceTotal();
+
         $("#btnInvalidate").on("click", function (){
             invalidateInvoice();
         });

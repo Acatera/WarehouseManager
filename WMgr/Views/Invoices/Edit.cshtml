@@ -183,8 +183,13 @@
             url: "/Invoices/Validate",
             data: {id: invoiceId},
             success: function () {
+                $("#btnValidate")
+                    .attr("id", "btnInvalidate")
+                    .text("Invalidate")
+                    .click(invalidateInvoice)
+                    .attr("class", "btn btn-danger");
                 $("#searchGroup").hide();
-                alert("Invoice validated. Additional alterations are not permitted.");
+                //alert("Invoice validated. Additional alterations are not permitted.");
             }
         });
     }
@@ -196,8 +201,13 @@
             url: "/Invoices/Invalidate",
             data: {id: invoiceId},
             success: function () {
+                $("#btnInvalidate")
+                    .attr("id", "btnValidate")
+                    .text("Validate")
+                    .click(validateInvoice)
+                    .attr("class", "btn btn-success");
                 $("#searchGroup").show();
-                alert("Invoice invalidated. Alterations are now permitted.");
+                //alert("Invoice invalidated. Alterations are now permitted.");
             }  
         });
     }

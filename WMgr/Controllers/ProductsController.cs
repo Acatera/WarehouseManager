@@ -53,7 +53,7 @@ namespace WMgr.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductId,ProductName")] Product product)
+        public ActionResult Create([Bind(Include = "ProductId,ProductName,Price")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace WMgr.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price")] Product product)
         {
             if (ModelState.IsValid)
             {

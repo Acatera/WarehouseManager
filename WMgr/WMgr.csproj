@@ -201,6 +201,10 @@
     <Compile Include="Migrations\201612251120548_Extra.Designer.cs">
       <DependentUpon>201612251120548_Extra.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612282328468_RevertedChanges.cs" />
+    <Compile Include="Migrations\201612282328468_RevertedChanges.Designer.cs">
+      <DependentUpon>201612282328468_RevertedChanges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -300,6 +304,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612251120548_Extra.resx">
       <DependentUpon>201612251120548_Extra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612282328468_RevertedChanges.resx">
+      <DependentUpon>201612282328468_RevertedChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

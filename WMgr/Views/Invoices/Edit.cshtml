@@ -57,6 +57,7 @@
         </div>
     </div>
 
+    <div class="row panel panel-default" id="noProducts">No products found.</div>
     <div class="panel panel-default" id="searchResults">
         <table class="table table-striped table-condensed table-hover table-fixed" id="productsTable">
             <tr>
@@ -88,7 +89,7 @@
         var html = "<tr>";
         html += "<td>" + product["ProductName"] + "</td>";
         html += "<td>" + product["Price"] + "</td>";
-        html += "<td><button id=\"btnAddProductId" + product["ProductId"] + "\" class=\"btn btn-default\">Add</button></td>";
+        html += "<td><button id=\"btnAddProductId" + product["ProductId"] + "\" class=\"btn btn-warning\">Add</button></td>";
         html += "</tr>";
 
         $("#productsTable").append(html);
@@ -107,8 +108,15 @@
             data: { search: name },
             success: function (data) {
                 $("#productsTable").find("tr:gt(0)").remove();
-                for (var i = 0; i < data.length; i++) {
-                    addSearchResult(data[i]);
+                if (data.length === 0) {
+                    $("#productsTable").hide();
+                    $("#noProducts").show();
+                } else {
+                    $("#noProducts").hide();
+                    $("#productsTable").show();
+                    for (var i = 0; i < data.length; i++) {
+                        addSearchResult(data[i]);
+                    }
                 }
             }
         });

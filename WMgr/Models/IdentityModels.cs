@@ -33,5 +33,7 @@ namespace WMgr.Models
         public System.Data.Entity.DbSet<WMgr.Models.Invoice> Invoices { get; set; }
 
         public System.Data.Entity.DbSet<WMgr.Models.Product> Products { get; set; }
+
+        public System.Data.Entity.DbSet<WMgr.Models.TodoItem> TodoItems { get; set; }
     }
 }

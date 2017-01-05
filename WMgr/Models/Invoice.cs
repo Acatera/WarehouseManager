@@ -17,5 +17,18 @@ namespace WMgr.Models
         public bool Validated { get; set; }
 
         public virtual ICollection<InvoiceDetail> Details { get; set; }
+        public object Total {
+            get
+            {
+                var total = 0m;
+
+                foreach (var detail in Details)
+                {
+                    total += detail.SellPrice * detail.Quantity;
+                }
+
+                return total;
+            }
+        }
     }
 }

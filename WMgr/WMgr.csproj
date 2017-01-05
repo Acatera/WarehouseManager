@@ -215,6 +215,10 @@
     <Compile Include="Migrations\201701041028504_AddedPeople.Designer.cs">
       <DependentUpon>201701041028504_AddedPeople.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701051347151_UpdatedInvoiceDetailDefinition.cs" />
+    <Compile Include="Migrations\201701051347151_UpdatedInvoiceDetailDefinition.Designer.cs">
+      <DependentUpon>201701051347151_UpdatedInvoiceDetailDefinition.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -304,9 +308,11 @@
     <Content Include="Views\People\Details.cshtml" />
     <Content Include="Views\People\Edit.cshtml" />
     <Content Include="Views\People\Index.cshtml" />
+    <Content Include="Views\Invoices\EditorTemplates\InvoiceDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Invoices\Partial\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -337,6 +343,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701041028504_AddedPeople.resx">
       <DependentUpon>201701041028504_AddedPeople.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701051347151_UpdatedInvoiceDetailDefinition.resx">
+      <DependentUpon>201701051347151_UpdatedInvoiceDetailDefinition.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -30,21 +30,26 @@
 
     <div class="panel panel-default">
         <table class="table table-striped table-condensed table-hover table-fixed" id="invoiceProducts">
-            <tr>
-                <th>Product</th>
-                <th width="15%">Quantity</th>
-                <th width="15%">Price</th>
-                <th width="20%">Actions</th>
-            </tr>
-            @foreach (var detail in Model.Details)
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th width="15%">Quantity</th>
+                    <th width="15%">Price</th>
+                    <th width="20%">Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            @*@Html.EditorFor(details => Model.Details)*@
+            @*@foreach (var detail in Model.Details)
             {
+                @Html.EditorFor(details => Model.Details)
                 <tr class="invoiceDetail" id="productId@(detail.Product.ProductId)">
                     <td>@detail.Product.ProductName</td>
                     <td>@detail.Quantity</td>
                     <td>@detail.SellPrice</td>
                     <td><button class="btn btn-danger btnRemove" id="btnRemoveId@(detail.Product.ProductId)">Delete</button></td>
                 </tr>
-            }
+            }*@
         </table>
     </div>
 </div>
@@ -239,18 +244,37 @@
         });
     }
 
+    function removeProduct(sender, id) {
+        $(sender).parent().parent().remove();
+        console.log("removeProduct");
+        //console.log(sender);
+        console.log(id);
+    }
+
     function updateInvoiceTotal() {
-        var total = 0;
-        $(".invoiceDetail").each(function (index, element){
-            //console.log("row" + index + ": " + this.text())
-            total += parseFloat($(this).find("td:eq(2)").text()).toFixed(2) * parseInt($(this).find("td:eq(1)").text());
-            console.log(total);
+        $.ajax({
+            type: "POST",
+            url: "/Invoices/" + @Model.InvoiceId + "/Total",
+            success: function (data) {
+                $("#invoiceTotal").text("Total: " + data.invoiceTotal.toFixed(2));
+            }  
         });
-        $("#invoiceTotal").text("Total: " + total.toFixed(2));
+    }
+
+    function renderProducts(){
+        $.ajax({
+            type: "POST",
+            url: "/Invoices/" + @Model.InvoiceId + "/Products",
+            success: function (data) {
+                $('#invoiceProducts tbody').empty();
+                $('#invoiceProducts tbody').append(data);
+            }  
+        });
     }
 
     $(document).ready(function () {
         updateInvoiceTotal();
+        renderProducts();
 
         $("#btnInvalidate").on("click", function (){
             invalidateInvoice();

@@ -54,6 +54,21 @@ namespace WMgr.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public ActionResult Products(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Invoice invoice = db.Invoices.Find(id);
+            if (invoice == null)
+            {
+                return HttpNotFound();
+            }
+
+            return PartialView("EditorTemplates/InvoiceDetail", invoice.Details);
+        }
 
         [HttpPost]
         public ActionResult AddProduct(int? invoiceId, int? productId)
@@ -155,6 +170,23 @@ namespace WMgr.Controllers
             db.SaveChanges();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        [HttpPost]
+        public ActionResult Total(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var invoice = db.Invoices.Find(id);
+            if (invoice == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
+            return Json(new { invoiceTotal = invoice.Total}, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

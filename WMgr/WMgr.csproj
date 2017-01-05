@@ -203,10 +203,6 @@
     <Compile Include="Migrations\201612251120548_Extra.Designer.cs">
       <DependentUpon>201612251120548_Extra.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612282328468_RevertedChanges.cs" />
-    <Compile Include="Migrations\201612282328468_RevertedChanges.Designer.cs">
-      <DependentUpon>201612282328468_RevertedChanges.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201612290027113_AddedTodoItems_Temporary.cs" />
     <Compile Include="Migrations\201612290027113_AddedTodoItems_Temporary.Designer.cs">
       <DependentUpon>201612290027113_AddedTodoItems_Temporary.cs</DependentUpon>
@@ -334,9 +330,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612251120548_Extra.resx">
       <DependentUpon>201612251120548_Extra.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612282328468_RevertedChanges.resx">
-      <DependentUpon>201612282328468_RevertedChanges.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612290027113_AddedTodoItems_Temporary.resx">
       <DependentUpon>201612290027113_AddedTodoItems_Temporary.cs</DependentUpon>

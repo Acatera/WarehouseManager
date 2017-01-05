@@ -181,6 +181,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PeopleController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\TodoItemsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -210,20 +211,27 @@
     <Compile Include="Migrations\201612290027113_AddedTodoItems_Temporary.Designer.cs">
       <DependentUpon>201612290027113_AddedTodoItems_Temporary.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701041028504_AddedPeople.cs" />
+    <Compile Include="Migrations\201701041028504_AddedPeople.Designer.cs">
+      <DependentUpon>201701041028504_AddedPeople.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\InvoiceDetail.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\TodoItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap_.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap_.min.css" />
+    <Content Include="Content\bootstrap.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -291,6 +299,11 @@
     <Content Include="Views\TodoItems\Details.cshtml" />
     <Content Include="Views\TodoItems\Edit.cshtml" />
     <Content Include="Views\TodoItems\Index.cshtml" />
+    <Content Include="Views\People\Create.cshtml" />
+    <Content Include="Views\People\Delete.cshtml" />
+    <Content Include="Views\People\Details.cshtml" />
+    <Content Include="Views\People\Edit.cshtml" />
+    <Content Include="Views\People\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -321,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612290027113_AddedTodoItems_Temporary.resx">
       <DependentUpon>201612290027113_AddedTodoItems_Temporary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701041028504_AddedPeople.resx">
+      <DependentUpon>201701041028504_AddedPeople.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

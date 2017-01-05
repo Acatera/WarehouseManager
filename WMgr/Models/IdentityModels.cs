@@ -35,5 +35,7 @@ namespace WMgr.Models
         public System.Data.Entity.DbSet<WMgr.Models.Product> Products { get; set; }
 
         public System.Data.Entity.DbSet<WMgr.Models.TodoItem> TodoItems { get; set; }
+
+        public System.Data.Entity.DbSet<WMgr.Models.Person> People { get; set; }
     }
 }

@@ -23,7 +23,7 @@
             </dl>
         </div>
         <div class="col-md-6">
-            <h2 id="invoiceTotal">Total: $553.87</h2>
+            <h2 id="invoiceTotal"></h2>
         </div>
     </div>
     <hr />
@@ -49,16 +49,17 @@
     </div>
 </div>
 
-<div id="searchGroup" @if (Model.Validated) { <text> hidden</text> }>
-    <div class="form-group">
-        <input type="text" class="form-control col-md-10 col-xs-10" id="productSearch" placeholder="type a product name" />
+<div class="container" id="searchGroup" @if (Model.Validated) { <text> hidden</text> }>
+    <div class="row form-group">
+        <input type="text" class="form-control col-md-10 col-xs-10" id="productSearch" placeholder="type a product name" onkeypress="handleSearchKeypress(event)"/>
         <div class="col-md-2 col-xs-2">
             <button class="btn btn-info" type="button" id="btnProductSearch">Search</button>
         </div>
     </div>
 
-    <div class="row panel panel-default" id="noProducts">No products found.</div>
-    <div class="panel panel-default" id="searchResults">
+    <div class="row" id="noProducts" hidden>No products found.</div>
+
+    <div class="row panel panel-default" id="searchResults" hidden>
         <table class="table table-striped table-condensed table-hover table-fixed" id="productsTable">
             <tr>
                 <th>Product name</th>
@@ -85,6 +86,24 @@
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script>
+    function handleSearchKeypress(e) {
+        if (e.keyCode == 13) {
+            searchProductsWithName($("#productSearch").val());
+        }
+    }
+
+    $(function() {
+        var timer;
+        $("#productSearch").keyup(function() {
+            clearTimeout(timer);
+            var ms = 1000; // milliseconds
+            var val = this.value;
+            timer = setTimeout(function() {
+                searchProductsWithName(val);
+            }, ms);
+        });
+    });
+
     function addSearchResult(product) {
         var html = "<tr>";
         html += "<td>" + product["ProductName"] + "</td>";
@@ -109,11 +128,11 @@
             success: function (data) {
                 $("#productsTable").find("tr:gt(0)").remove();
                 if (data.length === 0) {
-                    $("#productsTable").hide();
+                    $("#searchResults").hide();
                     $("#noProducts").show();
                 } else {
                     $("#noProducts").hide();
-                    $("#productsTable").show();
+                    $("#searchResults").show();
                     for (var i = 0; i < data.length; i++) {
                         addSearchResult(data[i]);
                     }

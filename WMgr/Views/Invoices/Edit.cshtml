@@ -6,7 +6,7 @@
 
 <h2>Edit</h2>
 
-<div class="form-horizontal">
+<div class="form-horizontal" id="entity-id" data-entity-id="@Model.InvoiceId">
     <h4>Invoice</h4>
     <hr />
     <div class="row">
@@ -39,17 +39,6 @@
                 </tr>
             </thead>
             <tbody></tbody>
-            @*@Html.EditorFor(details => Model.Details)*@
-            @*@foreach (var detail in Model.Details)
-            {
-                @Html.EditorFor(details => Model.Details)
-                <tr class="invoiceDetail" id="productId@(detail.Product.ProductId)">
-                    <td>@detail.Product.ProductName</td>
-                    <td>@detail.Quantity</td>
-                    <td>@detail.SellPrice</td>
-                    <td><button class="btn btn-danger btnRemove" id="btnRemoveId@(detail.Product.ProductId)">Delete</button></td>
-                </tr>
-            }*@
         </table>
     </div>
 </div>
@@ -86,213 +75,11 @@
     {
         <button class="btn btn-danger" id="btnInvalidate">Invalidate</button>
     }
-
 </div>
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<script>
-    function handleSearchKeypress(e) {
-        if (e.keyCode == 13) {
-            searchProductsWithName($("#productSearch").val());
-        }
-    }
 
-    $(function() {
-        var timer;
-        $("#productSearch").keyup(function() {
-            clearTimeout(timer);
-            var ms = 1000; // milliseconds
-            var val = this.value;
-            timer = setTimeout(function() {
-                searchProductsWithName(val);
-            }, ms);
-        });
-    });
-
-    function addSearchResult(product) {
-        var html = "<tr>";
-        html += "<td>" + product["ProductName"] + "</td>";
-        html += "<td>" + product["Price"] + "</td>";
-        html += "<td><button id=\"btnAddProductId" + product["ProductId"] + "\" class=\"btn btn-warning\">Add</button></td>";
-        html += "</tr>";
-
-        $("#productsTable").append(html);
-        $("#btnAddProductId" + product["ProductId"]).on("click", function () {
-            var productId = this.id;
-            productId = productId.replace("btnAddProductId", "");
-            console.log("Product id is " + productId);
-            sendAdditionRequest(productId);
-        });
-    }
-
-    function searchProductsWithName(name) {
-        $.ajax({
-            type: "POST",
-            url: "/Products/Search",
-            data: { search: name },
-            success: function (data) {
-                $("#productsTable").find("tr:gt(0)").remove();
-                if (data.length === 0) {
-                    $("#searchResults").hide();
-                    $("#noProducts").show();
-                } else {
-                    $("#noProducts").hide();
-                    $("#searchResults").show();
-                    for (var i = 0; i < data.length; i++) {
-                        addSearchResult(data[i]);
-                    }
-                }
-            }
-        });
-    }
-
-    function addInvoiceProduct(details) {
-        var productRow = $("#productId" + details["Product"]["ProductId"]);
-        if (productRow.length == 0) {
-            var html = "<tr class=\"invoiceDetail\" id=\"productId" + details["Product"]["ProductId"] + "\">";
-            html += "<td>" + details["Product"]["ProductName"] + "</td>";
-            html += "<td>1</td>";
-            html += "<td>" + details["Product"]["Price"] + "</td>";
-            html += "<td><button id=\"btnRemoveId" + details["Product"]["ProductId"] + "\" class=\"btn btn-danger btnRemove\">Delete</button></td>";
-            html += "</tr>";
-
-            $("#invoiceProducts").append(html);
-            $(".btnRemove").on("click", function () {
-                var productId = this.id;
-                productId = productId.replace("btnRemoveId", "");
-                console.log("btnclick" + productId);
-                sendRemovalRequest(productId);
-            });
-        } else {
-            var oldQty = parseInt(productRow.find("td:eq(1)").text());
-            productRow.find("td:eq(1)").text(oldQty + 1);
-        }
-        updateInvoiceTotal();
-    }
-
-    function sendAdditionRequest(product) {
-        var invoiceId = @Model.InvoiceId;
-        $.ajax({
-            type: "POST",
-            url: "/Invoices/AddProduct",
-            data: { invoiceId: invoiceId, productId: product },
-            success: function (data) {
-                addInvoiceProduct(data);
-            }
-        });
-    }
-
-    function sendRemovalRequest(productId) {
-        var invoiceId = @Model.InvoiceId;
-        $.ajax({
-            type: "POST",
-            url: "/Invoices/RemoveProduct",
-            data: { invoiceId: invoiceId, productId: productId },
-            success: function () {
-                removeInvoiceProduct(productId);
-            }
-        });
-    }
-
-    function removeInvoiceProduct(productId) {
-        $("#productId" + productId).remove();
-        updateInvoiceTotal();
-        //$(document).remove("#productId" + productId);
-        //console.log("removeInvoiceProduct " + productId);
-    }
-
-    function btnRemoveClick() {
-        var productId = this.id;
-        productId = productId.replace("btnRemoveId", "");
-        console.log("btnclick" + productId);
-        sendRemovalRequest(productId);
-    }
-
-    function validateInvoice() {
-        var invoiceId = @Model.InvoiceId;
-        $.ajax({
-            type: "POST",
-            url: "/Invoices/Validate",
-            data: {id: invoiceId},
-            success: function () {
-                $("#btnValidate")
-                    .attr("id", "btnInvalidate")
-                    .text("Invalidate")
-                    .click(invalidateInvoice)
-                    .attr("class", "btn btn-danger");
-                $("#searchGroup").hide();
-                //alert("Invoice validated. Additional alterations are not permitted.");
-            }
-        });
-    }
-
-    function invalidateInvoice() {
-        var invoiceId = @Model.InvoiceId;
-        $.ajax({
-            type: "POST",
-            url: "/Invoices/Invalidate",
-            data: {id: invoiceId},
-            success: function () {
-                $("#btnInvalidate")
-                    .attr("id", "btnValidate")
-                    .text("Validate")
-                    .click(validateInvoice)
-                    .attr("class", "btn btn-success");
-                $("#searchGroup").show();
-                //alert("Invoice invalidated. Alterations are now permitted.");
-            }  
-        });
-    }
-
-    function removeProduct(sender, id) {
-        $(sender).parent().parent().remove();
-        console.log("removeProduct");
-        //console.log(sender);
-        console.log(id);
-    }
-
-    function updateInvoiceTotal() {
-        $.ajax({
-            type: "POST",
-            url: "/Invoices/" + @Model.InvoiceId + "/Total",
-            success: function (data) {
-                $("#invoiceTotal").text("Total: " + data.invoiceTotal.toFixed(2));
-            }  
-        });
-    }
-
-    function renderProducts(){
-        $.ajax({
-            type: "POST",
-            url: "/Invoices/" + @Model.InvoiceId + "/Products",
-            success: function (data) {
-                $('#invoiceProducts tbody').empty();
-                $('#invoiceProducts tbody').append(data);
-            }  
-        });
-    }
-
-    $(document).ready(function () {
-        updateInvoiceTotal();
-        renderProducts();
-
-        $("#btnInvalidate").on("click", function (){
-            invalidateInvoice();
-        });
-        $("#btnValidate").on("click", function (){
-            validateInvoice();
-        });
-        $("#btnProductSearch").click(function () {
-            searchProductsWithName($("#productSearch").val());
-        });
-        $(".btnRemove").click(function () {
-            var productId = this.id;
-            productId = productId.replace("btnRemoveId", "");
-            console.log("btnclick" + productId);
-            sendRemovalRequest(productId);
-        });
-    });
-</script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/App/orderEdit.js")
 }

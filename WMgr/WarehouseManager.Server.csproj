@@ -187,6 +187,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Inventory\InvoiceQueue.cs" />
+    <Compile Include="Inventory\InvoiceConsumer.cs" />
+    <Compile Include="Inventory\StocksManager.cs" />
     <Compile Include="Migrations\201612251038509_AddedInvoices.cs" />
     <Compile Include="Migrations\201612251038509_AddedInvoices.Designer.cs">
       <DependentUpon>201612251038509_AddedInvoices.cs</DependentUpon>

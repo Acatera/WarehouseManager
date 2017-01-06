@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseManager.Server", "WMgr\WarehouseManager.Server.csproj", "{35B3FC91-6CA9-4710-88F8-139697D67863}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseManager.Server", "WarehouseManager.Server\WarehouseManager.Server.csproj", "{35B3FC91-6CA9-4710-88F8-139697D67863}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseManager.Client", "WarehouseClient\WarehouseManager.Client.csproj", "{3647DD1C-AFF1-492F-87E4-CB8888E9E571}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseManager.Client", "WarehouseManager.Client\WarehouseManager.Client.csproj", "{3647DD1C-AFF1-492F-87E4-CB8888E9E571}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseManager.Server.Tests", "WarehouseManager.Tests\WarehouseManager.Server.Tests.csproj", "{CEE2BAED-39D9-4022-A8E9-C6F0B6F510A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseManager.Server.Tests", "WarehouseManager.Server.Tests\WarehouseManager.Server.Tests.csproj", "{CEE2BAED-39D9-4022-A8E9-C6F0B6F510A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -57,7 +57,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WMgr\WarehouseManager.Server.csproj">
+    <ProjectReference Include="..\WarehouseManager.Server\WarehouseManager.Server.csproj">
       <Project>{35B3FC91-6CA9-4710-88F8-139697D67863}</Project>
       <Name>WarehouseManager.Server</Name>
     </ProjectReference>

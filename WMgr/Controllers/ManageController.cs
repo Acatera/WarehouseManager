@@ -6,9 +6,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using WMgr.Models;
+using WarehouseManager.Models;
 
-namespace WMgr.Controllers
+namespace WarehouseManager.Controllers
 {
     [Authorize]
     public class ManageController : Controller

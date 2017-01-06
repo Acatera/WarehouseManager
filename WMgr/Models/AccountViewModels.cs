@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace WMgr.Models
+namespace WarehouseManager.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

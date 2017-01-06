@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace WMgr.Models
+namespace WarehouseManager.Models
 {
     public class Invoice
     {

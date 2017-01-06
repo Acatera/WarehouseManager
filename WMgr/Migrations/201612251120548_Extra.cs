@@ -1,4 +1,4 @@
-namespace WMgr.Migrations
+namespace WarehouseManager.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

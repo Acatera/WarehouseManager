@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace WMgr.Models
+namespace WarehouseManager.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
@@ -30,12 +30,12 @@ namespace WMgr.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<WMgr.Models.Invoice> Invoices { get; set; }
+        public System.Data.Entity.DbSet<WarehouseManager.Models.Invoice> Invoices { get; set; }
 
-        public System.Data.Entity.DbSet<WMgr.Models.Product> Products { get; set; }
+        public System.Data.Entity.DbSet<WarehouseManager.Models.Product> Products { get; set; }
 
-        public System.Data.Entity.DbSet<WMgr.Models.TodoItem> TodoItems { get; set; }
+        public System.Data.Entity.DbSet<WarehouseManager.Models.TodoItem> TodoItems { get; set; }
 
-        public System.Data.Entity.DbSet<WMgr.Models.Person> People { get; set; }
+        public System.Data.Entity.DbSet<WarehouseManager.Models.Person> People { get; set; }
     }
 }

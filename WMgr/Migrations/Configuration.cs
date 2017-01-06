@@ -1,18 +1,18 @@
-namespace WMgr.Migrations
+namespace WarehouseManager.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<WMgr.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<WarehouseManager.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(WMgr.Models.ApplicationDbContext context)
+        protected override void Seed(WarehouseManager.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

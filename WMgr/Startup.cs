@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(WMgr.Startup))]
-namespace WMgr
+[assembly: OwinStartupAttribute(typeof(WarehouseManager.Startup))]
+namespace WarehouseManager
 {
     public partial class Startup
     {

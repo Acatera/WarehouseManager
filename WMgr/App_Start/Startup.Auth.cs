@@ -5,9 +5,9 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using WMgr.Models;
+using WarehouseManager.Models;
 
-namespace WMgr
+namespace WarehouseManager
 {
     public partial class Startup
     {

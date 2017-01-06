@@ -16,41 +16,29 @@ $(function() {
     });
 });
 
-function addSearchResult(product) {
-    var html = "<tr>";
-    html += "<td>" + product["ProductName"] + "</td>";
-    html += "<td>" + product["Price"] + "</td>";
-    html += "<td><button id=\"btnAddProductId" + product["ProductId"] + "\" class=\"btn btn-warning btn-sm\">Add</button></td>";
-    html += "</tr>";
-
-    $("#productsTable").append(html);
-    $("#btnAddProductId" + product["ProductId"]).on("click", function () {
-        var productId = this.id;
-        productId = productId.replace("btnAddProductId", "");
-        console.log("Product id is " + productId);
-        sendAdditionRequest(productId);
-    });
-}
-
 function searchProductsWithName(name) {
     $.ajax({
         type: "POST",
         url: "/Products/Search",
         data: { search: name },
         success: function (data) {
-            $("#productsTable").find("tr:gt(0)").remove();
-            if (data.length === 0) {
+            $('#searchResults tbody').empty();
+            $('#searchResults tbody').append(data);
+            
+            $("#noProducts").hide();
+            $("#searchResults").show();
+        },
+        statusCode: {
+            204: function () { //No content
                 $("#searchResults").hide();
                 $("#noProducts").show();
-            } else {
-                $("#noProducts").hide();
-                $("#searchResults").show();
-                for (var i = 0; i < data.length; i++) {
-                    addSearchResult(data[i]);
-                }
             }
         }
     });
+}
+
+function addSearchResult(productId) {
+    sendAdditionRequest(productId);
 }
 
 function sendAdditionRequest(productId) {
@@ -78,7 +66,6 @@ function validateInvoice() {
                 .click(invalidateInvoice)
                 .attr("class", "btn btn-danger");
             $("#searchGroup").hide();
-            //alert("Invoice validated. Additional alterations are not permitted.");
         }
     });
 }
@@ -95,15 +82,12 @@ function invalidateInvoice() {
                 .click(validateInvoice)
                 .attr("class", "btn btn-success");
             $("#searchGroup").show();
-            //alert("Invoice invalidated. Alterations are now permitted.");
         }  
     });
 }
 
 function removeProduct(productId) {
     var invoiceId = $("#entity-id").data("entity-id");
-    var dataId = $(this).data("product-id");
-    console.log("invoiceId:" + invoiceId);
     $.ajax({
         type: "POST",
         url: "/Invoices/RemoveProduct",

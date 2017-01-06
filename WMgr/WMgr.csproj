@@ -305,11 +305,11 @@
     <Content Include="Views\People\Details.cshtml" />
     <Content Include="Views\People\Edit.cshtml" />
     <Content Include="Views\People\Index.cshtml" />
-    <Content Include="Views\Invoices\EditorTemplates\InvoiceDetail.cshtml" />
+    <Content Include="Views\Invoices\Partial\InvoiceDetail.cshtml" />
+    <Content Include="Views\Products\Partial\ProductList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Invoices\Partial\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

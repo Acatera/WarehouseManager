@@ -1,0 +1,10 @@
+﻿@model ICollection<WMgr.Models.Product>
+
+@foreach (var product in Model)
+{
+    <tr>
+        <td>@product.ProductName</td>
+        <td>@product.Price</td>
+        <td><button class="btn btn-warning btn-sm" onclick="addSearchResult(@product.ProductId)">Add</button></td>
+    </tr>
+}

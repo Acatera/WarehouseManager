@@ -67,7 +67,7 @@ namespace WMgr.Controllers
                 return HttpNotFound();
             }
 
-            return PartialView("EditorTemplates/InvoiceDetail", invoice.Details);
+            return PartialView("Partial/InvoiceDetail", invoice.Details);
         }
 
         [HttpPost]

@@ -18,7 +18,13 @@ namespace WMgr.Controllers
         public ActionResult Search(string search)
         {
             var result = db.Products.Where(p => p.ProductName.Contains(search.ToLower())).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            if (result.Count() > 0)
+            {
+                return PartialView("Partial/ProductList", result);
+            }else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+            }
         }
 
         // GET: Products

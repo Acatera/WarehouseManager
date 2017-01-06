@@ -1,11 +1,16 @@
 ﻿@model ICollection<WMgr.Models.InvoiceDetail>
+
 @foreach (var detail in Model)
 {
-    <tr>
+    <tr> 
         @Html.HiddenFor(d => detail.InvoiceDetailId)
         <td>@detail.Product.ProductName</td>
         <td>@Html.EditorFor(qty => detail.Quantity, new { htmlAttibutes = new { @class = "form-control input-sm" } })</td>
-        <td>@detail.SellPrice</td>
-        <td><button class="btn btn-danger btn-sm" onclick="removeProduct(@detail.Product.ProductId)">Delete</button></td>
+        <td style="text-align:right">@detail.SellPrice</td>
+        <td style="text-align:right">
+            <button class="btn btn-danger btn-sm" onclick="removeProduct(@detail.Product.ProductId)">
+                <span class="glyphicon glyphicon-trash"></span>
+            </button>
+        </td>
     </tr>
 }

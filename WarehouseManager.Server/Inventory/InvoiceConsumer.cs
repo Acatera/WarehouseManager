@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WarehouseManager.Models;
 
 namespace WarehouseManager.Inventory
 {
     public class InvoiceConsumer
     {
+        Invoice _currentInvoice;
         public void ConsumeNextInvoice()
         {
-            throw new NotImplementedException();
+            _currentInvoice = InvoiceQueue.DequeueInvoice();
         }
     }
 }

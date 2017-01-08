@@ -25,9 +25,9 @@ namespace WarehouseManager.Inventory
             return queue.Count();
         }
 
-        public static void Clean()
+        public static void Clear()
         {
-            throw new NotImplementedException();
+            queue.Clear();
         }
     }
 }

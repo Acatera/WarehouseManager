@@ -12,7 +12,7 @@ namespace WarehouseManager.Tests
         [TestMethod]
         public void TestInvoiceEnqueueingAndCount()
         {
-            InvoiceQueue.Clean();
+            InvoiceQueue.Clear();
 
             Invoice invoice = new Invoice();
             invoice.Details = new List<InvoiceDetail>();
@@ -25,7 +25,7 @@ namespace WarehouseManager.Tests
         [TestMethod]
         public void TestInvoiceQueueCleaning()
         {
-            InvoiceQueue.Clean();
+            InvoiceQueue.Clear();
         }
 
         [TestMethod]

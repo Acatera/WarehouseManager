@@ -26,10 +26,20 @@ namespace WarehouseManager.Tests
         }
 
         [TestMethod]
+        public void TestInvoiceConsumerStarting()
+        {
+            throw new NotImplementedException();
+        }
+
+        [TestMethod]
         public void TestEmptyInvoiceConsumption()
         {
             var consumer = new InvoiceConsumer();
+            var numInvoicesInQueue = InvoiceQueue.Count();
+
             consumer.ConsumeNextInvoice();
+
+            Assert.AreEqual(numInvoicesInQueue - 1, InvoiceQueue.Count());
         }
     }
 }
